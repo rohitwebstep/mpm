@@ -47,3 +47,22 @@ docker-compose -f docker-compose-dockerhub.yml up -d
 # 🌐 Application URLs
 # 👉 http://139.59.181.1:8001 → MPM UI
 # 👉 http://139.59.181.1:8000/api → API
+
+# ------------------------------------------------------------------------------
+# 🌱 Seed Initial Data (Run Migrations)
+
+# List running containers to confirm backend container name
+docker ps
+
+# Example output:
+# CONTAINER ID   IMAGE                             COMMAND                  NAMES
+# abcdef123456   enaccess/micropowermanager-backend:latest  "..."        backend
+
+# Enter the backend container
+docker exec -it backend bash
+
+# Inside the container, run:
+php artisan migrate-tenant:drop-demo-company
+php artisan migrate:fresh --seed
+
+# Done ✅
