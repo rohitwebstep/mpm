@@ -4,18 +4,24 @@
 sudo apt update && sudo apt upgrade -y
 
 # 📦 Step 2: Install Required Dependencies
-apt install -y curl git apt-transport-https ca-certificates software-properties-common gnupg lsb-release
+sudo apt install -y curl git apt-transport-https ca-certificates software-properties-common gnupg lsb-release
 
 # 🐳 Step 3: Install Docker and Docker Compose
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y docker.io docker-compose git
 sudo apt update && sudo apt upgrade -y
 
-systemctl enable docker
-systemctl start docker
+# Enable and Start Docker Service
+sudo systemctl enable docker
+sudo systemctl start docker
 
+# Verify Docker Installation
 docker --version
 docker-compose --version
+
+# Create Project Directory
+sudo mkdir -p /var/www
+sudo chown -R $USER:$USER /var/www
 
 # 📁 Step 4: Clone the MPM Project
 cd /var/www
@@ -34,6 +40,9 @@ sudo cp .env.example .env
 # 🐳 Step 6: Launch with Docker Compose
 cd /var/www/mpm
 docker-compose -f docker-compose-dockerhub.yml up -d
+
+# ⚠️ If any error occurs (like worker issues),
+# ➤ Comment out the "worker" service section in docker-compose-dockerhub.yml
 
 # 🌐 Application URLs
 # 👉 http://139.59.181.1:8001 → MPM UI
