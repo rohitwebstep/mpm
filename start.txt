@@ -1,0 +1,40 @@
+# 🚀 MPM Project Deployment Guide (Ubuntu)
+
+# 🛠️ Step 1: Update & Upgrade System Packages
+sudo apt update && sudo apt upgrade -y
+
+# 📦 Step 2: Install Required Dependencies
+apt install -y curl git apt-transport-https ca-certificates software-properties-common gnupg lsb-release
+
+# 🐳 Step 3: Install Docker and Docker Compose
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y docker.io docker-compose git
+sudo apt update && sudo apt upgrade -y
+
+systemctl enable docker
+systemctl start docker
+
+docker --version
+docker-compose --version
+
+# 📁 Step 4: Clone the MPM Project
+cd /var/www
+git clone https://github.com/rohitwebstep/mpm.git
+cd mpm
+
+# ⚙️ Step 5: Configure Environment Files
+sudo cp .env.example .env
+
+cd src/backend
+sudo cp .env.example .env
+
+cd ../frontend
+sudo cp .env.example .env
+
+# 🐳 Step 6: Launch with Docker Compose
+cd /var/www/mpm
+docker-compose -f docker-compose-dockerhub.yml up -d
+
+# 🌐 Application URLs
+# 👉 http://139.59.181.1:8001 → MPM UI
+# 👉 http://139.59.181.1:8000/api → API
