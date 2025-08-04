@@ -42,7 +42,6 @@
                     enabledCountryCode="true"
                     v-model="user.phone"
                     @validate="validatePhone"
-                    @input="onPhoneInput"
                   ></vue-tel-input>
                   <md-icon>phone</md-icon>
                   <span
@@ -130,7 +129,6 @@ export default {
       phone: {
         valid: true,
       },
-      firstStepClicked: false,
     }
   },
   mounted() {
@@ -138,10 +136,7 @@ export default {
   },
   methods: {
     async updateUser() {
-      this.firstStepClicked = true
       const validation = await this.$validator.validateAll("Edit-Form")
-
-      if (!this.phone.valid) return
       if (!validation) {
         return
       }
@@ -156,9 +151,6 @@ export default {
       }
     },
     validatePhone(phone) {
-      this.phone = phone
-    },
-    onPhoneInput(_, phone) {
       this.phone = phone
     },
     closeEditUser() {

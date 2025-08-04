@@ -59,11 +59,13 @@ return Application::configure(basePath: dirname(__DIR__))
             ]);
         });
         $exceptions->render(function (ValidationException $e, Request $request) {
+            $errorMessages = ($e instanceof Illuminate\Support\MessageBag) ? $e->toArray() : [$e];
+
             return response()->json([
                 'message' => 'Validation failed',
-                'errors' => $e->errors(),
+                'errors' => $errorMessages,
                 'status_code' => 422,
-            ], 422);
+            ]);
         });
     })
     ->withSchedule(function (Schedule $schedule) {
